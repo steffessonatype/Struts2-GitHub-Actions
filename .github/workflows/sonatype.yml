@@ -1,0 +1,36 @@
+name: 'Nexus IQ for GitHub Actions'
+author: 'Sonatype'
+description: 'Run a Nexus IQ policy evaluation as part of your GitHub Actions workflow.'
+inputs:
+  serverUrl:
+    description: 'http://iq-aplattel.ngrok.io/'
+    required: true
+  username:
+    description: 'admin'
+    required: true
+  password:
+    description: 'admin!23'
+    required: true
+  applicationId:
+    description: 'Struts2-GitHub-Actions'
+    required: true
+  stage:
+    description: 'build'
+    required: true
+    default: 'Build'
+  target:
+    description: '*'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.serverUrl }}
+    - ${{ inputs.username }}
+    - ${{ inputs.password }}
+    - ${{ inputs.applicationId }}
+    - ${{ inputs.stage }}
+    - ${{ inputs.target }}
+branding:
+  icon: 'shield'
+  color: 'gray-dark'
