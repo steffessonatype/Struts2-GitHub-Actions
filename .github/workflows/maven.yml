@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Generate settings.xml for Maven Builds
-    - uses: whelk-io/maven-settings-xml-action@v20
+      uses: whelk-io/maven-settings-xml-action@v20
       with:
         repositories: '[{ "id": "nexus-repository-manager", "url": "https://nxrm-aplattel.ngrok.io/repository/maven-test/" }]'
 
