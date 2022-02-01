@@ -1,0 +1,60 @@
+name: "build-test"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
+jobs:
+
+  build: # make sure build/ci work properly
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - run: |
+          npm ci
+          npm test
+
+  test-basic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: ./
+        with:
+          #servers: '[{"id": "foo", "username": "fu", "password": "bar" }]'
+          #mirrors: '[{ "id": "nexus", "mirrorOf": "!my-org-snapshots,*", "url": "http://redacted/nexus/content/groups/public" }]'
+          repositories: '[{ "id": "nexus-repository-manager", "url": "https://nxrm-aplattel.ngrok.io/repository/maven-test/" }]'
+          #plugin_repositories: '[{"id": "foo-plugin", "url": "https://fu.bar.plugin"}]'
+          #profiles: '[{ "id": "foo.profile", "name": "foo.profile", "url": "http://foo.bar.profile", "properties": { "foo": "property-1", "bar": "property-2"} }]'
+          #plugin_groups: '[ "some.plugin.group.id", "some.other.plugin.group.id" ]'
+          #active_profiles: '[ "foo.profile" ]'
+      - run: |
+          cat ~/.m2/settings.xml
+
+  test-filepath:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: ./
+        with:
+          output_file: custom.xml
+      - run: |
+          cat custom.xml
+
+  test-maven:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: ./
+        with:
+          output_file: custom.xml
+      - run: |
+          cat custom.xml
+      - uses: actions/setup-java@v2.3.1
+        with:
+          java-version: 11
+          distribution: 'adopt'
+      - run: |
+          cd test/maven;
+          ./mvnw -s ../../custom.xml clean test
