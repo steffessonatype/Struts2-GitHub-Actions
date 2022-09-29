@@ -32,8 +32,8 @@ jobs:
     - name: Build with Maven
       # run: mvn -B package --file pom.xml
       run: |
-        cd test/maven;
-        ./mvnw -s ../../pom.xml clean test
+        pwd
+        ls -al
         
     - name: TEST
       run: |
