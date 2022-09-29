@@ -25,7 +25,7 @@ jobs:
     - name: Build with Maven
       # run: mvn -B package --file pom.xml
       run: |
-        mvn clean package
+        echo "mvn clean package"
         
     - name: Pull Sonatype CLI with CURL
       uses: wei/curl@master
@@ -34,5 +34,7 @@ jobs:
         
     - name: Trigger Sonatype Scan
       run: |
+        java -version
+        ls -al
         java -jar nexus-iq-cli.jar -s http://iq-aplattel.ngrok.io/ -a 'admin:admin!23'  -t build -i Struts2-GitHub-Actions .
 
