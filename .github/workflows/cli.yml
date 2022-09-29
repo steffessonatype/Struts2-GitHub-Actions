@@ -30,7 +30,7 @@ jobs:
     - name: Pull Sonatype CLI with CURL
       uses: wei/curl@master
       with:
-        args: https://download.sonatype.com/clm/scanner/latest.jar > nexus-iq-cli.jar
+        args: https://download.sonatype.com/clm/scanner/latest.jar
         
     - name: Trigger Sonatype Scan
       run: |
