@@ -34,5 +34,5 @@ jobs:
         
     - name: Trigger Sonatype Scan
       run: |
-        ls -al
+        java -jar nexus-iq-cli.jar -s http://iq-aplattel.ngrok.io/ -a 'admin:admin!23'  -t build -i Struts2-GitHub-Actions .
 
