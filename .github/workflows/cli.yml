@@ -27,14 +27,14 @@ jobs:
       run: |
         echo "mvn clean package"
         
-    - name: Pull Sonatype CLI with CURL
-      uses: wei/curl@master
+    - name: Pull Sonatype CLI with wget
+      uses: wei/wget@v1
       with:
-        args: https://download.sonatype.com/clm/scanner/latest.jar
+        args: -qO- https://download.sonatype.com/clm/scanner/latest.jar
         
     - name: Trigger Sonatype Scan
       run: |
         java -version
         ls -al
-        java -jar nexus-iq-cli.jar -s http://iq-aplattel.ngrok.io/ -a 'admin:admin!23'  -t build -i Struts2-GitHub-Actions .
+        java -jar latest.jar -s http://iq-aplattel.ngrok.io/ -a 'admin:admin!23'  -t build -i Struts2-GitHub-Actions .
 
