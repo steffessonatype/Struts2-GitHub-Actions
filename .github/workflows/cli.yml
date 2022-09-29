@@ -30,7 +30,7 @@ jobs:
     - name: Pull Sonatype CLI with wget
       uses: wei/wget@v1
       with:
-        args: -qO- https://download.sonatype.com/clm/scanner/latest.jar
+        args: -O latest.jar https://download.sonatype.com/clm/scanner/latest.jar
         
     - name: Trigger Sonatype Scan
       run: |
