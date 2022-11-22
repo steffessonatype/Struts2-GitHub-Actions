@@ -3,7 +3,7 @@ author: 'Sonatype'
 description: 'Run a Nexus IQ policy evaluation as part of your GitHub Actions workflow.'
 inputs:
   serverUrl:
-    description: 'http://iq-aplattel.ngrok.io/'
+    description: 'https://als.pagekite.me/'
     required: true
   username:
     description: 'admin'
