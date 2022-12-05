@@ -36,5 +36,5 @@ jobs:
       run: |
         java -version
         ls -al
-        java -jar latest.jar -s https://als.pagekite.me/ -a 'admin:admin1234'  -t build -i Struts2-GitHub-Actions .
+        java -jar latest.jar -s https://als.pagekite.me/ -a 'admin:admin1234'  -t release -i Struts2-GitHub-Actions .
 
