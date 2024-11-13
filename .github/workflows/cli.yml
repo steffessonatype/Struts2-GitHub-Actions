@@ -38,3 +38,39 @@ jobs:
         ls -al
         java -jar latest.jar -s https://als.pagekite.me/ -a 'admin:admin1234'  -t release -i Struts2-GitHub-Actions .
 
+
+
+name: Sonatype Workflow
+on: push
+jobs:
+  sonatype-cli:
+    runs-on: ubuntu-latest
+    steps:
+      # Check out your code
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+      # Perform an evaluation 
+      - name: Run evaluate action
+        id: evaluate
+        uses: sonatype/actions/evaluate@v1
+        with:
+          iq-server-url: https://als.pagekite.me/
+          username: admin
+          password: admin1234
+          application-id: Struts2-GitHub-Actions
+          scan-targets: pom.xml
+      # Fetch the SBOM file associated with the evaluation
+      - name: Fetch SBOM
+        uses: sonatype/actions/fetch-sbom@v1
+        if: ( success() || failure() ) && steps.evaluate.outputs.scan-id 
+        with:
+          iq-server-url: https://als.pagekite.me/
+          username: admin
+          password: admin1234
+          application-id: Struts2-GitHub-Actions
+          scan-id: ${{ steps.evaluate.outputs.scan-id }}
+          sbom-standard: cyclonedx
+          sbom-version: 1.5
+          sbom-format: json
+          artifact-name: Struts2-GitHub-Actions-sbom.json
